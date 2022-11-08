@@ -14,10 +14,23 @@ app.get('/', (req, res) =>{
     res.send('Welcome to personal service server')
 })
 
-const uri = "mongodb+srv://<username>:<password>@cluster0.tmuuwhy.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.tmuuwhy.mongodb.net/?retryWrites=true&w=majority`;
+console.log(uri);
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-const collection = client.db("test").collection("devices");
 
+
+async function run() {
+    try{
+        const serviceCollection = client.db("PersonalService").collection("services");
+        app.get('/services', (req, res) => {
+            
+        })
+    }
+    finally{
+
+    }
+}
+run().catch(err => console.log(err))
 
 
 app.listen(port, () => {
