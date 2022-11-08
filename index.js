@@ -1,3 +1,4 @@
+
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const cors = require('cors');
@@ -22,14 +23,4 @@ const collection = client.db("test").collection("devices");
 app.listen(port, () => {
     console.log(`personal Service Servier Is running port ${port} ${port}`);
 })
-
-
-
-
-
-
-
-
-
-
 
