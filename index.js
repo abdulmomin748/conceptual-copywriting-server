@@ -42,9 +42,15 @@ async function run() {
             const post = req.body;
             const result = await reviewCollection.insertOne(post);
             res.send(result)
+            console.log(result);
         })
-        app.get('/displayReview', async(req, res) => {
-            const reviews = await reviewCollection.find().toArray();
+
+        app.get('/displayReview/:id', async(req, res) => {
+            const id =  req.params.id;
+            const query = {serviceId: id}; // eita objectId te convert korar lgbena karon hochhe, eikhane objectId diye save ny
+            
+            const reviews = await reviewCollection.find(query).toArray();
+            console.log(reviews);
             res.send(reviews);
         })
     }
