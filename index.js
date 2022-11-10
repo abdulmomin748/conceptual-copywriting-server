@@ -29,7 +29,7 @@ const verifyJwt = (req, res, next) => {
     const token = authHeader.split(' ')[1];
     jwt.verify(token, process.env.ACCESS_TOKEN_SECREET, (error, decoded) => {
         if(error){
-            return res.status(401).send({message: 'Forbidden access'});
+            return res.status(403).send({message: 'Forbidden access'});
         }
         // set decoded
         req.decoded = decoded;
@@ -75,7 +75,7 @@ async function run() {
             const id =  req.params.id;
             const query = {serviceId: id}; // eita objectId te convert korar lgbena karon hochhe, eikhane objectId diye save ny
             
-            const reviews = await reviewCollection.find(query).toArray();
+            const reviews = await reviewCollection.find(query).sort({_id: -1}).toArray();
             console.log(reviews);
             res.send(reviews);
         })
@@ -87,7 +87,7 @@ async function run() {
             if(decoded.email !== req.query.userEmail){
                 res.status(403).send({message: 'unauthorized access'}) 
             }
-            console.log(decoded);
+            console.log(decoded.email,req.query.userEmail );
 
             let query = {};
             if(req.query.userEmail){
